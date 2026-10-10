@@ -1,0 +1,10 @@
+#!/bin/bash
+for led in /sys/class/leds/input*::scrolllock; do
+  name=$(cat "$led/device/name" 2>/dev/null)
+  case "$name" in
+    "INSTANT USB Keyboard"*)
+      f="$led/brightness"
+      if [ "$(cat "$f")" = "1" ]; then echo 0 > "$f"; else echo 1 > "$f"; fi
+      ;;
+  esac
+done
